@@ -12,9 +12,37 @@ const loggedInUser = {
 }
 _createMails()
 query()
+export const mailService = {
+    query,
+    get,
+    remove,
+    save,
+    getDefaultFilter,
+}
 function query(){
-    mail = storageService.query(MAIL_KEY)
-    console.log(mail)
+    return storageService.query(MAIL_KEY).then(mails =>{
+        return mails
+    })
+
+}
+function get(mailId) {
+    return storageService.get(KEY,mailId)
+}
+
+function remove(mailId) {
+    return storageService.remove(KEY, mailId)
+}
+
+function save(mail) {
+    if (mail.id) {
+        return storageService.put(KEY, mail)
+    } else {
+        return storageService.post(KEY, mail)
+    }
+}
+function getDefaultFilter(){
+    return { txt: ''}
+
 }
 
 function _createMail(subject, body, from, to){
