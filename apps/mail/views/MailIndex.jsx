@@ -1,21 +1,50 @@
-import {mailService} from '../services/mail.service.js'
-import {showSuccessMsg, showErrorMsg} from '../../../services/event-bus.service.js'
+import { mailService } from '../services/mail.service.js'
+import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 import { MailList } from '../cmps/MailList.jsx'
+import { MailFilter } from '../cmps/MailFilter.jsx'
 const { useEffect, useState, Fragment } = React
 const { Outlet, useSearchParams, useParams } = ReactRouterDOM
 
 export function MailIndex() {
-    return <Fragment>
-        <main className='mail-index '>
-            <MailList/>
-        </main>
+
+    const [mails, setMails] = useState(null)
+    const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
+    const [selectedMailId, setSelectedMailId] = useState(null)
+
+    useEffect(() => {
+        console.log('mount')
+        mailService.query(filterBy).then(mails => setMails(mails))
+    }, [filterBy])
+
+    function onRemoveMail(mailId) {
+        mailService.remove(mailId).then(() => {
+            setMails(prevMails => prevMails.filter(mail => mail.id !== mailId))
+        })
+    }
+
+    function onSetFilterBy(filterBy) {
+        console.log('filterBy:', filterBy)
+        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+    }
+
+    function onSelectMailId(mailId) {
+        setSelectedMailId(mailId)
+    }
 
 
-
-
-
-
-
-    </Fragment>
+    console.log('render')
+    if (!mails) return <div>Loading...</div>
+    return (
+        <section className="mail-index">
+            {!selectedMailId &&
+                <React.Fragment>
+                    <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onSelectMailId={onSelectMailId} />
+                </React.Fragment>
+            }
+            {selectedMailId && <MailDetails onBack={() => onSelectMailId(null)} mailId={selectedMailId} />}
+        </section>
+    )
 }
+
 
