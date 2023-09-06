@@ -1,7 +1,11 @@
 // import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
-import { noteService } from "../note.service.js"
-//import { eventBusService, showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
+import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
+
+import { noteService } from "../services/note.service.js"
+import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
+
 
 
 const { useState, useEffect } = React
