@@ -1,7 +1,7 @@
 // mail service
 
-import { utilService } from '../../../services/util.service'
-import { storageService } from '../../../services/storage.service'
+import { utilService } from '../../../services/util.service.js'
+import { storageService } from '../../../services/async-storage.service.js'
 
 
 const MAIL_KEY = 'mailDB'
@@ -11,7 +11,11 @@ const loggedInUser = {
     fullname: 'Mahatma Appsus'
 }
 _createMails()
-
+query()
+function query(){
+    mail = storageService.query(MAIL_KEY)
+    console.log(mail)
+}
 
 function _createMail(subject, body, from, to){
     const mail={
@@ -30,9 +34,10 @@ function _createMails(){
     let mails = storageService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length){
         mails = []
-        mails.push(_createMail('start',utilService.makeLorem,'test@test.com','user@appsus.com'))
-        mails.push(_createMail('middle',utilService.makeLorem,'test@test.com','user@appsus.com'))
-        mails.push(_createMail('end',utilService.makeLorem,'test@test.com','user@appsus.com'))
+        mails.push(_createMail('start','deadadeaedaaadaedaedaedaed','test@test.com','user@appsus.com'))
+        mails.push(_createMail('middle','12312312312312312312','test@test.com','user@appsus.com'))
+        mails.push(_createMail('end','1o2u3n1ou23n1o2u3n1o2u3n1ou','test@test.com','user@appsus.com'))
         storageService.saveToStorage(MAIL_KEY,mails)
+        
     }
 }
