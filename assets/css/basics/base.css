@@ -21,3 +21,8 @@ img {
     width: 100%;
     object-fit: cover;
 }
+
+.app-header .logo {
+    width: 75px; /* Set the desired width */
+    height: auto;
+}

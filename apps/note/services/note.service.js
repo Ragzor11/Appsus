@@ -15,7 +15,7 @@ export const noteService = {
     getDefaultNote,
 }
 
-function query(filterBy = {}) { 
+function query(filterBy = {}) {
     return storageService.query(NOTE_KEY)
         .then(notes => {
             //     if (filterBy.title) {
@@ -53,24 +53,16 @@ function save(note) {
     }
 }
 
-function getEmptyNote(title = '', amount = '') {
+function getEmptyNote(title = '', text = '') {
     return {
         title,
-        subtitle: '',
-        authors: [],
-        publishedDate: 2023,
-        description: '',
-        pageCount: 500,
-        categories: [],
-        thumbnail: `assets/imgs/${utilService.getRandomIntInclusive(1, 20)}.jpg`,
-        language: 'en',
-        listPrice: {
-            amount,
-            currencyCode: 'USD',
-            isOnSale: false
-        }
+        info: { text },
+        type: 'NoteTxt',
+        isPinned: false,
+        style: { backgroundColor: 'white' }
     }
 }
+
 
 function getDefaultFilter() {
     return { title: '', price: '' }
@@ -78,6 +70,10 @@ function getDefaultFilter() {
 
 function getDefaultNote() {
     return { fullName: '', rating: '', readAt: '' }
+}
+
+function addNote(note) {
+
 }
 
 

@@ -2,6 +2,6 @@
  
  export function NoteSideFilter() {
     return (
-        <div>I'm The Side Filter</div>
+        <h1>i'm a side bar</h1>
     )
  }

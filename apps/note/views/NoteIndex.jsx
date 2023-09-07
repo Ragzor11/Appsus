@@ -1,19 +1,20 @@
 // import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
+import { AddNote } from "../cmps/AddNote.jsx"
+
 import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
 import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
 
 import { noteService } from "../services/note.service.js"
-//import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
-
-
+import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
 const { useState, useEffect } = React
 //const { Link } = ReactRouterDOM
 
 export function NoteIndex() {
-   
+
     const [notes, setNotes] = useState(null)
+
     const [filterBy, setFilterBy] = useState(noteService.getDefaultFilter())
 
     useEffect(() => {
@@ -22,8 +23,12 @@ export function NoteIndex() {
             .catch(err => console.log('err:', err))
     }, [filterBy])
 
+    function loadNotes() {
+		noteService.query(filterBy).then(setNotes)
+	}
+
     function onRemoveNote(noteId) {
-        bookService
+        noteService
             .remove(noteId)
             .then(() => {
                 setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId))
@@ -35,52 +40,54 @@ export function NoteIndex() {
             })
     }
 
-
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
+    function onChangeColor(color, noteId) {
+     		noteService.get(noteId).then(note => {
+			const newNote = { ...note, style: {backgroundColor: color} }
+			noteService.save(newNote).then(() => loadNotes())
+		})
+	}
+    function onDuplicateNote(note) {
+		const newNote = { ...note, id: null }
+		noteService.save(newNote)
+        .then(note => {
+			setNotes(prevNotes => [...prevNotes, note])
+		})
+	}
+    
 
-    // function onAddBook(googleBook) {
-    //     noteService.addBook(googleBook)
-    //         .then((book) => {
-    //             if (book) {
-    //                 const msg = {
-    //                     txt: `Added ${googleBook.title} to the list`,
-    //                     type: `success`,
-    //                     bookId: googleBook.id,
-    //                 }
-    //                 eventBusService.emit('user-msg', msg)
-    //                 setNotes((prevBooks) => [...prevBooks, book])
-    //                 return
-    //             } else {
-    //                 const msg = {
-    //                     txt: `Added ${googleBook.title} already exists in the list`,
-    //                     type: `error`,
-    //                     bookId: googleBook.id,
-    //                 }
-    //                 eventBusService.emit('user-msg', msg)
-    //             }
-    //         })
-    // }
-
+    function onAddNote(note) {
+        noteService.addNote(note)
+            .then((note) => { note })
+    }
+    
     if (!notes) return <div>Loading...</div>
     return (
         <section className="note-mainlayout">
 
-            <div className="subheader">
+            <article className="subheader">
                 <NoteTopFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            </div>
+            </article>
+
+            <article className="note-maker">
+                <AddNote filterBy={filterBy} onSetFilterBy={onSetFilterBy} onAddNote={onAddNote} />
+            </article>
 
             <aside className="note-side-filter">
                 <NoteSideFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
             </aside>
 
             <main className="notes-list">
-                <NoteList notes={notes} onRemoveNote={onRemoveNote} />
+                <NoteList 
+                notes={notes} 
+                onRemoveNote={onRemoveNote} 
+                onChangeColor={onChangeColor}
+                onDuplicateNote={onDuplicateNote}
+                 />
             </main>
         </section>
     )
 }
-
-
 

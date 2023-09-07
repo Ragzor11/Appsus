@@ -34,23 +34,22 @@ export function NoteTopFilter({ filterBy, onSetFilterBy }) {
         ev.preventDefault()
         onSetFilterBy(filterByToEdit)
     }
-        
+
     const { search } = filterByToEdit
 
     return (
         <section className='note-filter'>
             <form onSubmit={onSubmitFilter}>
-                <label htmlFor='search'>
-                    {searchIcon}
-                </label>
-                <input
-                    value={search}
-                    onChange={handleChange}
-                    type='search'
-                    placeholder=' Search'
-                    id='search'
-                    name='search'
-                />
+                <div className="search-container">
+                    <div className="search-icon">{searchIcon}</div>
+                    <input
+                        value={search}
+                        onChange={handleChange}
+                        type='search'
+                        placeholder='Search'
+                        name='search'
+                    />
+                </div>
             </form>
         </section>
     )

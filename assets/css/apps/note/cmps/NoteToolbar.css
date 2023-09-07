@@ -1,0 +1,35 @@
+/* Note Toolbar*/
+
+.note-toolbar {
+    padding: .25em;
+}
+.not-toolbar>* {
+    padding: .5em;
+}
+.color-scheme {
+    display: flex;
+    padding: .25em;
+    border-radius: .3em;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+}
+
+.color-scheme>* {
+    display: flex;
+    grid-auto-flow: column;
+    width: 30px;
+    height: 30px;
+    margin: .25em;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.color-scheme .fill:hover {
+    border: 2px solid black;
+}
+
+/* .color-scheme .fill::before:hover {
+    content: attr(title); /* Display the color name as an after-element */
+    margin-left: 5px; /* Add some spacing between the color and the name */
+  } */
