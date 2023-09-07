@@ -1,0 +1,5 @@
+.mail-sidebar{
+    display: flex;
+    flex-direction: column;
+    grid-row: 1/3;
+}

@@ -1,8 +1,11 @@
 .mail-container {
     border-collapse: collapse;
     width: 100%;
+    grid-column: 2/3;
+    background-color: #fff;
+    border-radius: 15px;
+    margin: 5px;
 }
-
 
 .mail-list tr:hover {
     box-shadow: var(--mail-box-shadow-1);

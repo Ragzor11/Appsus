@@ -1,5 +1,8 @@
 .mail-index{
+    display: grid;
     background-color: var(--mail-bg-clr-2);
     text-align: center;
+    grid-template-columns:1.5fr 10fr;
+    grid-template-rows: 1fr 9.8375fr;
 
 }

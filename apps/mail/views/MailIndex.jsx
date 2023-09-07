@@ -2,6 +2,7 @@ import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 import { MailList } from '../cmps/MailList.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
+import { MailSideBar } from '../cmps/MailSideBar.jsx'
 const { useEffect, useState, Fragment } = React
 const { Outlet, useSearchParams, useParams } = ReactRouterDOM
 
@@ -37,6 +38,7 @@ export function MailIndex() {
     if (!mails) return <div>Loading...</div>
     return (
         <section className="mail-index">
+            <MailSideBar key="mail-sidebar"/>
             {!selectedMailId &&
                 <React.Fragment>
                     <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
