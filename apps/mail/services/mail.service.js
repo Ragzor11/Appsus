@@ -19,10 +19,14 @@ export const mailService = {
     save,
     getDefaultFilter,
 }
-function query(){
+function query(filterBy = {}){
+    console.log('query filter by',filterBy)
     return storageService.query(MAIL_KEY).then(mails =>{
-        return mails
-    })
+        if (filterBy.txt) {
+			const regExp = new RegExp(filterBy.txt, 'i')
+			mails = mails.filter(mail => regExp.test(mail.subject) || regExp.test(mail.body) || regExp.test(mail.senderMail) || regExp.test(mail.senderName))}
+            return mails
+})
 
 }
 function get(mailId) {
