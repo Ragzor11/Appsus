@@ -12,6 +12,8 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
+        console.log(value)
+        console.log(target.type)
 
         switch (target.type) {
             case 'number':
@@ -37,7 +39,7 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
 
     const { txt } = filterByToEdit
     return (
-        <section className="book-filter">
+        <section className="mail-filter">
             <form onSubmit={onSubmitFilter}>
                 <label htmlFor="txt"></label>
                 <input value={txt} onChange={handleChange} type="text" placeholder="Search..." id="txt" name="txt" />
