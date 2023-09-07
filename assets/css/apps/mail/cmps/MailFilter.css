@@ -1,0 +1,38 @@
+.mail-filter {
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+
+}
+
+.search-box i {
+    position: absolute;
+}
+
+.search-box .icon:hover {
+    background-color: #ddd;
+    border-radius: 50%;
+}
+
+.search-box {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box .icon {
+    padding: 5px;
+    min-width: 40px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 24px;
+    border: none;
+    font-size: 20px;
+    background-color: #eaf1fb;
+}

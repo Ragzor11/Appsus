@@ -21,3 +21,7 @@
 .grid {
     display: grid;
 }
+
+.clicked{
+    background-color: #ffffff;
+}

@@ -1,0 +1,6 @@
+.mail-details{
+    background-color: var(--mail-bg-clr-1);
+}
+.mail-details img{
+    width: 50px;
+}

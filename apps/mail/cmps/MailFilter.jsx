@@ -1,9 +1,10 @@
 const { useState, useEffect } = React
 
 export function MailFilter({ filterBy, onSetFilterBy }) {
-console.log(filterBy,'filterBy')
-console.log(onSetFilterBy,'onSetFilterBy')
+    console.log(filterBy, 'filterBy')
+    console.log(onSetFilterBy, 'onSetFilterBy')
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const [textClicked, setTextClicked] = useState(false)
 
 
     useEffect(() => {
@@ -38,14 +39,17 @@ console.log(onSetFilterBy,'onSetFilterBy')
         ev.preventDefault()
         onSetFilterBy(filterByToEdit)
     }
+    function onClick() {
+        console.log('clicked');
+    }
 
     const { txt } = filterByToEdit
     return (
-        <section className="mail-filter">
-            <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt"></label>
-                <input value={txt} onChange={handleChange} type="text" placeholder="Search..." id="txt" name="txt" />
-            </form>
-        </section>
+        <form className="mail-filter">
+            <div className="search-box"onSubmit={onSubmitFilter}>
+                <i class="icon fa-solid fa-magnifying-glass"></i>
+                <input onClick={onClick} value={txt} onChange={handleChange} type="text" placeholder="Search mail" id="txt" name="txt" />
+            </div>
+        </form>
     )
 }
