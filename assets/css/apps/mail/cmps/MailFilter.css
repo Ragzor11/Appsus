@@ -1,0 +1,19 @@
+.mail-filter {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.mail-filter .search-box {
+    border-radius: 24px;
+    background-color: #eaf1fb;
+    border: none;
+    margin-top: 0em;
+    min-height: 48px;
+    width: 580px;
+    font: 13px/27px;
+    text-align: start;
+    justify-content: start;
+    align-items: center;
+    
+}

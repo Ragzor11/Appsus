@@ -5,6 +5,7 @@
     background-color: #fff;
     border-radius: 15px;
     margin: 5px;
+    height: 100%;
 }
 
 .mail-list tr:hover {
