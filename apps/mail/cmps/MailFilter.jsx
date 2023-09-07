@@ -45,13 +45,11 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
 
     const { txt } = filterByToEdit
     return (
-        <section className="mail-filter">
-            <form className="search-box"
-                onSubmit={onSubmitFilter}>
-                <i class="fa-solid fa-magnifying-glass"></i>
+        <form className="mail-filter">
+            <div className="search-box"onSubmit={onSubmitFilter}>
+                <i class="icon fa-solid fa-magnifying-glass"></i>
                 <input onClick={onClick} value={txt} onChange={handleChange} type="text" placeholder="Search mail" id="txt" name="txt" />
-
-            </form>
-        </section>
+            </div>
+        </form>
     )
 }

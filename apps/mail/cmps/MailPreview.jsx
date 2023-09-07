@@ -9,6 +9,7 @@ export function MailPreview({ mail }) {
 	}
     return (
         <tr onClick={handleMailOpening} className="mail-preview">
+            <td><i class="fa-regular fa-star"></i> <i class="fa-solid fa-trash"></i></td>
             <td>{mail.senderName}</td>
             <td>{mail.subject}</td>
             <td>{mail.body}</td>
