@@ -30,18 +30,18 @@ function query(filterBy = {}){
 
 }
 function get(mailId) {
-    return storageService.get(KEY,mailId)
+    return storageService.get(MAIL_KEY,mailId)
 }
 
 function remove(mailId) {
-    return storageService.remove(KEY, mailId)
+    return storageService.remove(MAIL_KEY, mailId)
 }
 
 function save(mail) {
     if (mail.id) {
-        return storageService.put(KEY, mail)
+        return storageService.put(MAIL_KEY, mail)
     } else {
-        return storageService.post(KEY, mail)
+        return storageService.post(MAIL_KEY, mail)
     }
 }
 function getDefaultFilter(){
