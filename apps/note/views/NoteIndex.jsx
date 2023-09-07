@@ -4,7 +4,7 @@ import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
 import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
 
 import { noteService } from "../services/note.service.js"
-import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
+//import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
 
 
@@ -15,7 +15,6 @@ export function NoteIndex() {
 
     const [notes, setNotes] = useState(null)
     const [filterBy, setFilterBy] = useState(noteService.getDefaultFilter())
-
 
     useEffect(() => {
         noteService.query(filterBy)

@@ -1,6 +1,14 @@
-
-export function NoteList() {
+import {Note} from "../cmps/Note.jsx"
+export function NoteList({ notes }) {
     console.log('hi');
 
-    return <div>note list</div>
+    return (
+        <ul className="book-list">
+            {notes.map(note =>
+                <li key={note.id}>
+                    <Note note={note} />
+
+                </li>)}
+        </ul>
+    )
 }
