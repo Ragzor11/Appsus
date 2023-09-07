@@ -47,7 +47,7 @@ function getDefaultFilter(){
 
 function _createMail(subject, body, senderName,senderMail, to){
     const mail={
-    id: utilService.makeId ,
+    id: utilService.makeId() ,
     subject,
     body,
     isRead: false,

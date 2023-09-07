@@ -10,6 +10,7 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     }, [filterByToEdit])
 
     function handleChange({ target }) {
+        console.log('filtering')
         const field = target.name
         let value = target.value
         console.log(value)
