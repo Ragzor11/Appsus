@@ -3,9 +3,6 @@
     width: 100%;
 }
 
-.mail-list {
-    border: 1px solid black;
-}
 
 .mail-list tr:hover {
     box-shadow: var(--mail-box-shadow-1);
