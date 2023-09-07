@@ -1,1 +1,25 @@
- /* mail list */
+.mail-container {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.mail-list {
+    border: 1px solid black;
+}
+
+.mail-list tr:hover {
+    box-shadow: var(--mail-box-shadow-1);
+}
+
+
+.mail-list td{
+line-height: 20px;
+font-size: .875rem;
+padding-top: 10px;
+padding-bottom: 10px;
+justify-self: start;
+}
+.mail-list td:last-child{
+    justify-self: end;
+    padding-inline-end: 50px;
+}
