@@ -1,7 +1,6 @@
 export function MailPreview({ mail }) {
-    console.log(mail)
     return (
-        <tr className="mail-preview" key="mail.id">
+        <tr className="mail-preview">
             <td>{mail.senderName}</td>
             <td>{mail.subject}</td>
             <td>{mail.body}</td>

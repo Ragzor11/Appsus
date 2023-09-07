@@ -13,6 +13,7 @@ export function MailIndex() {
 
     useEffect(() => {
         console.log('mount')
+        console.log('use effect filter',filterBy)
         mailService.query(filterBy).then(mails => setMails(mails))
     }, [filterBy])
 
