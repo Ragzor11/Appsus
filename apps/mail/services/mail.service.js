@@ -55,6 +55,7 @@ function _createMail(subject, body, from, to){
     removedAt: null,
     from,
     to,
+    
     }
     return mail
 }
