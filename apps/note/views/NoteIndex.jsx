@@ -12,7 +12,7 @@ const { useState, useEffect } = React
 //const { Link } = ReactRouterDOM
 
 export function NoteIndex() {
-
+   
     const [notes, setNotes] = useState(null)
     const [filterBy, setFilterBy] = useState(noteService.getDefaultFilter())
 

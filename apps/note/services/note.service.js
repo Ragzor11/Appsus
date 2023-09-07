@@ -99,7 +99,7 @@ function _createNotes() {
                 type: 'NoteImg',
                 isPinned: false,
                 info: {
-                    url: 'http://some-img/me',
+                    url: 'https://fastly.picsum.photos/id/139/200/300.jpg?hmac=LFfuwfbYa2mo__RoCuyS9ujrwnHgF5c4AXDiCs3JNZ0',
                     title: 'Bobi and Me'
                 },
                 style: { backgroundColor: '#00d' }
