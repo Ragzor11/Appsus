@@ -66,6 +66,12 @@ export function NoteIndex() {
         noteService.addNote(note)
     }
 
+    function onTogglePin(note) {
+        note.isPinned = !note.isPinned
+        noteService.save(note)
+            .then(loadNotes)
+    }
+
     if (!notes) return <div>Loading...</div>
     return (
         <section className="note-mainlayout">
@@ -89,7 +95,9 @@ export function NoteIndex() {
                     onChangeColor={onChangeColor}
                     onDuplicateNote={onDuplicateNote}
                     note2WayBinding={note2WayBinding}
+                    onTogglePin={onTogglePin}
                 />
+            <div className="overlay"></div>
             </main>
         </section>
     )

@@ -2,12 +2,47 @@
 
 .note {
 	border: 1px solid #cccccc;
-	border-radius: 5px;
-	padding: 10px;
+	border-radius: .5em;
+	padding: 10px 10px 0 10px;
 	position: relative;
-	/* overflow: hidden; */
+	transition: box-shadow .2s ease-in;
 }
 
+.note:focus {
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    width: 100vw; /* Minimum width of 100vw */
+    background-color: white;
+    z-index: 2; /* Place it above the overlay */
+    transition: transform 0.3s;
+}
+
+.overlay .note:focus  {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Place it above other content */
+}
+
+.note:hover {
+	/* box-shadow: inset 1px 1px 1px rgba(0,0,0,.25); */
+	box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
+}
+
+.note .title {
+	padding: 1em 1em 0 1em;
+}
+
+.note .title {
+	padding: 1em 1em 0 1em;
+}
 /* .note .content-editable-container iframe {
 	width: 100%;
 	margin-inline: auto;
@@ -19,7 +54,7 @@
 }
 
 .note h1 {
-	font-weight:500;
+	font-weight: 500;
 	font-size: 1.5em;
 	padding-inline-end: 20px;
 }
@@ -53,6 +88,38 @@
 
 @media (max-width: 450px) {
 	.note {
-		width: 20em;
+		width: 90vw;
+		margin: 0;
+		padding: 0;
 	}
 }
+
+.note .pin {
+	position: absolute;
+	padding: .25em;
+	border-radius: 50%;
+	right: 5px;
+	top: 5px;
+	color: #202124;
+	opacity: 0;
+	transition: opacity 0.2s ease-in, background-color 0.2s  ease-in;
+	pointer-events: none; 
+}
+
+.note:hover .pin {
+	opacity: 1; 
+    pointer-events: auto; 
+}
+.note .pin .pinned {
+	color: black;
+	opacity: 1;
+}
+
+.note:hover .pin .pinned {
+	color: black;
+	opacity: 1;
+}
+.note:hover .pin:hover {
+	background-color: rgba(95,99,104,0.1);
+}
+
