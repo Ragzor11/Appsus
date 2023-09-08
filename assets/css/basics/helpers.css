@@ -25,3 +25,8 @@
 .clicked{
     background-color: #ffffff;
 }
+.material-symbols-outlined.starred {
+	font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 200, 'opsz' 48;
+	transition: 0.3s;
+	color: gold;
+}

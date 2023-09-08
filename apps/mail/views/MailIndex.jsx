@@ -14,40 +14,58 @@ export function MailIndex() {
 
     useEffect(() => {
         console.log('mount')
-        console.log('use effect filter',filterBy)
+        console.log('use effect filter', filterBy)
         mailService.query(filterBy).then(mails => setMails(mails))
     }, [filterBy])
 
     function onRemoveMail(mailId) {
-        mailService.remove(mailId).then(() => {
-            setMails(prevMails => prevMails.filter(mail => mail.id !== mailId))
-        })
+        mailService
+            .get(mailId)
+            .then(mail => {
+                if (mail.removedAt) {
+                    onFullDeleteMail(mailId)
+                    return
+                }
+                const newMail = { ...mail, removedAt: Date.now() }
+                mailService.save(newMail).then(() => {
+                    setMails(mails.filter(mail => mail.id !== mailId))
+                    console.log('moved to trash')
+                    showSuccessMsg('Email moved to trash!')
+                })
+            })
+            .catch(() => showErrorMsg('Error moving mail to trash'))
+    }
+    function onFullDeleteMail(mailId) {
+        console.log('FullDelte',mailId)
+
     }
 
-    function onSetFilterBy(filterBy) {
-        console.log('filterBy:', filterBy)
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
-    }
 
-    function onSelectMailId(mailId) {
-        setSelectedMailId(mailId)
-    }
-
-
-    console.log('render')
-    if (!mails) return <div>Loading...</div>
-    return (
-        <section className="mail-index">
-            <MailSideBar key="mail-sidebar"/>
-            {!selectedMailId &&
-                <React.Fragment>
-                    <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onSelectMailId={onSelectMailId} />
-                </React.Fragment>
-            }
-            {selectedMailId && <MailDetails onBack={() => onSelectMailId(null)} mailId={selectedMailId} />}
-        </section>
-    )
+function onSetFilterBy(filterBy) {
+    console.log('filterBy:', filterBy)
+    setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
 }
+
+function onSelectMailId(mailId) {
+    setSelectedMailId(mailId)
+}
+
+
+console.log('render')
+if (!mails) return <div>Loading...</div>
+return (
+    <section className="mail-index">
+        <MailSideBar key="mail-sidebar" />
+        {!selectedMailId &&
+            <React.Fragment>
+                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+                <MailList mails={mails} onRemoveMail={onRemoveMail} onSelectMailId={onSelectMailId} />
+            </React.Fragment>
+        }
+        {selectedMailId && <MailDetails onBack={() => onSelectMailId(null)} mailId={selectedMailId} />}
+    </section>
+)
+}
+
 
 
