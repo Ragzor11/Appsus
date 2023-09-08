@@ -4,6 +4,7 @@ const { useState, useEffect, useRef } = React
 export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTogglePin, note2WayBinding }) {
     const [noteEdit, setNoteEdit] = useState(note)
     const [noteColor, setNoteColor] = useState(note.style.backgroundColor)
+    const [pinState, setPinState] = useState(note.isPinned)
     //console.log(noteEdit);
     const { id, info, type, style } = noteEdit
     const  { txt, title, url, todos } = info
@@ -35,14 +36,19 @@ export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTog
         setNoteColor(color)
         onChangeColor(color, id)
     }
-
+    function onTogglePinChange(ev) {
+		ev.stopPropagation()
+		onTogglePin(note)
+		setPinState(prevPinState => !prevPinState)
+	}
+    const isPinned = pinState ? 'pinned' : ''
     return (
         <div className="note" style={bgStyle} onBlur={onNoteChange} >
-
+            <span className={`pin material-symbols-outlined ${isPinned}`} title="Pin Note" onClick={onTogglePinChange}>push_pin</span>
             {type === 'NoteImg' && <img src={url} alt="image!" />}
-            {!title && <h1 ref={elTitle} className="empty-title" contentEditable={true} suppressContentEditableWarning={true}></h1>}
-            {title && <h1 ref={elTitle} contentEditable={true} suppressContentEditableWarning={true} >{title} </h1>}
-            {txt && <p  ref={elTxt} contentEditable={true} suppressContentEditableWarning={true} >{txt} </p>}
+            {!title && <h1 ref={elTitle} className="title empty-title" contentEditable={true} suppressContentEditableWarning={true}></h1>}
+            {title && <h1 ref={elTitle} className="title" contentEditable={true} suppressContentEditableWarning={true} >{title} </h1>}
+            {txt && <p  ref={elTxt} className="txt" contentEditable={true} suppressContentEditableWarning={true} >{txt} </p>}
             <NoteToolbar
                 note={noteEdit}
                 onRemoveNote={onRemoveNote}
