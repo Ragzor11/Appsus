@@ -1,10 +1,8 @@
 // import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { AddNote } from "../cmps/AddNote.jsx"
-
 import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
 import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
-
 import { noteService } from "../services/note.service.js"
 import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
@@ -24,8 +22,8 @@ export function NoteIndex() {
     }, [filterBy])
 
     function loadNotes() {
-		noteService.query(filterBy).then(setNotes)
-	}
+        noteService.query(filterBy).then(setNotes)
+    }
 
     function onRemoveNote(noteId) {
         noteService
@@ -44,25 +42,30 @@ export function NoteIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
     function onChangeColor(color, noteId) {
-     		noteService.get(noteId).then(note => {
-			const newNote = { ...note, style: {backgroundColor: color} }
-			noteService.save(newNote).then(() => loadNotes())
-		})
-	}
+        noteService.get(noteId).then(note => {
+            const newNote = { ...note, style: { backgroundColor: color } }
+            noteService.save(newNote)
+            .then(() => loadNotes())
+        })
+    }
     function onDuplicateNote(note) {
-		const newNote = { ...note, id: null }
-		noteService.save(newNote)
-        .then(note => {
-			setNotes(prevNotes => [...prevNotes, note])
-		})
-	}
-    
+        const newNote = { ...note, id: null }
+        noteService.save(newNote)
+            .then(note => {
+                setNotes(prevNotes => [...prevNotes, note])
+            })
+    }
+
+    function note2WayBinding(note, noteEdit) {
+        const newNote = { ...note, ...noteEdit }
+        noteService.save(newNote)
+            .then(loadNotes)
+    }
 
     function onAddNote(note) {
         noteService.addNote(note)
-            .then((note) => { note })
     }
-    
+
     if (!notes) return <div>Loading...</div>
     return (
         <section className="note-mainlayout">
@@ -80,12 +83,13 @@ export function NoteIndex() {
             </aside>
 
             <main className="notes-list">
-                <NoteList 
-                notes={notes} 
-                onRemoveNote={onRemoveNote} 
-                onChangeColor={onChangeColor}
-                onDuplicateNote={onDuplicateNote}
-                 />
+                <NoteList
+                    notes={notes}
+                    onRemoveNote={onRemoveNote}
+                    onChangeColor={onChangeColor}
+                    onDuplicateNote={onDuplicateNote}
+                    note2WayBinding={note2WayBinding}
+                />
             </main>
         </section>
     )

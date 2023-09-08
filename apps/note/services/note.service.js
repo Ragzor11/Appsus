@@ -87,7 +87,11 @@ function _createNotes() {
                 type: 'NoteTxt',
                 isPinned: true,
                 style: { backgroundColor: '#00d' },
-                info: { txt: 'Fullstack Me Baby!' }
+                info: {
+                    title: '',
+                    txt: 'Fullstack Me Baby!',
+                },
+                style: { backgroundColor: '' }
             },
 
             {
@@ -95,8 +99,9 @@ function _createNotes() {
                 type: 'NoteImg',
                 isPinned: false,
                 info: {
-                    url: 'https://fastly.picsum.photos/id/139/200/300.jpg?hmac=LFfuwfbYa2mo__RoCuyS9ujrwnHgF5c4AXDiCs3JNZ0',
-                    title: 'Bobi and Me'
+                    url: 'https://www.allrecipes.com/thmb/9-DRrZRmNtyPNVjL-3BKQLMOMrc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/49404-Juiciest-Hamburgers-Ever-mfs-052-4ee37878e27b4e409b54f2a8f7313f99.jpg',
+                    title: 'Bobi and Me',
+                    txt: '',
                 },
                 style: { backgroundColor: '#00d' }
             },
@@ -107,11 +112,13 @@ function _createNotes() {
                 isPinned: false,
                 info: {
                     title: 'Get my stuff together',
+                    txt: '',
                     todos: [
                         { txt: 'Driving license', doneAt: null },
                         { txt: 'Coding power', doneAt: 187111111 }
                     ]
-                }
+                },
+                style: { backgroundColor: '' }
             }
         ]
 
