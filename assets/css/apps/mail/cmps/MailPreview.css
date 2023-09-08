@@ -2,3 +2,22 @@
     display: grid;
     grid-template-columns: 50px 1fr 1fr 1fr 1fr;
 }
+.mail-preview td{
+    display: flex;
+    align-items: center;
+}
+.mail-preview td .material-symbols-outlined{
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+}
+.mail-preview td .material-symbols-outlined:nth-child(2){
+margin-top: 3px;}

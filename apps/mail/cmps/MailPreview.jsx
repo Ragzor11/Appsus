@@ -28,7 +28,9 @@ export function MailPreview({ mail, onRemoveMail }) {
 
     return (
         <tr onClick={handleMailOpening} className="mail-preview">
-            <td><i onClick={handleMailStarring} className={`${isStarredClass} material-symbols-outlined`} title="Star mail">star</i><i onClick={handleMailToTrash} class="fa-solid fa-trash" title="Move to trash"></i></td>
+            <td><i onClick={handleMailStarring} className={`${isStarredClass} material-symbols-outlined`} title="Star mail">star</i>
+            <i onClick={handleMailToTrash} className="material-symbols-outlined" title="Move to trash">delete</i>
+            </td>
             <td >{mail.senderName}</td>
             <td >{mail.subject}</td>
             <td >{mail.body}</td>
