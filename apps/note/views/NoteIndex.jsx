@@ -1,8 +1,8 @@
 // import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { NoteList } from "../cmps/NoteList.jsx"
 import { AddNote } from "../cmps/AddNote.jsx"
-import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
-import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
+// import { NoteTopFilter } from "../cmps/NoteTopFilter.jsx"
+// import { NoteSideFilter } from "../cmps/NoteSideFilter.jsx"
 import { noteService } from "../services/note.service.js"
 import { eventBusService, showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
@@ -60,10 +60,15 @@ export function NoteIndex() {
         const newNote = { ...note, ...noteEdit }
         noteService.save(newNote)
             .then(loadNotes)
+            
     }
 
     function onAddNote(note) {
-        noteService.addNote(note)
+        console.log('THIS IS THE STUPID NOTE:', note);
+        noteService.save(note)
+            .then(loadNotes)
+            .then(showSuccessMsg('Note was added successfully!'))
+            .catch((err)=> console.log(`Note failed to be added: ${err}`))
     }
 
     function onTogglePin(note) {
@@ -76,17 +81,17 @@ export function NoteIndex() {
     return (
         <section className="note-mainlayout">
 
-            <article className="subheader">
+            {/* <article className="subheader">
                 <NoteTopFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            </article>
+            </article> */}
 
             <article className="note-maker">
                 <AddNote filterBy={filterBy} onSetFilterBy={onSetFilterBy} onAddNote={onAddNote} />
             </article>
 
-            <aside className="note-side-filter">
+            {/* <aside className="note-side-filter">
                 <NoteSideFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            </aside>
+            </aside> */}
 
             <main className="notes-list">
                 <NoteList
