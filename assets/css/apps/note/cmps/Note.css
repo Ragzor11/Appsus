@@ -1,5 +1,4 @@
 /* Note */
-
 .note {
 	border: 1px solid #cccccc;
 	border-radius: .5em;
@@ -8,28 +7,30 @@
 	transition: box-shadow .2s ease-in;
 }
 
-.note:focus {
+.note.center {
 	position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 600px;
-    width: 100vw; /* Minimum width of 100vw */
-    background-color: white;
-    z-index: 2; /* Place it above the overlay */
+	background-color: white;
+    width: 100vw; 
+    z-index: 10; 
     transition: transform 0.3s;
+	outline: none;
+	box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
 }
 
-.overlay .note:focus  {
-    display: none;
+
+ /* .overlay .note.center{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    z-index: 1; /* Place it above other content */
-}
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+} */
 
 .note:hover {
 	/* box-shadow: inset 1px 1px 1px rgba(0,0,0,.25); */
@@ -37,17 +38,34 @@
 }
 
 .note .title {
-	padding: 1em 1em 0 1em;
+	padding: 1em 1em .2em 1em;
+	font-weight: bold;
+	font-size: 1.25em;
 }
 
-.note .title {
-	padding: 1em 1em 0 1em;
-}
-/* .note .content-editable-container iframe {
-	width: 100%;
-	margin-inline: auto;
-	margin-block: 0.5em;
-} */
+.note .title.empty::before {
+	content: 'Title';
+	position: absolute;
+	top:37px;
+	/* left: 25px; */
+	font-weight: bold;
+	font-size: 1.25em;
+	transform: translateY(-50%);
+	color: #aaa;
+	pointer-events: none; 
+	opacity: 0.75;
+	transition: opacity 0.3s ease;
+  }
+  
+  .note .title.empty:focus::before {
+	opacity: 0; 
+  }
+
+  .note .txt {
+	padding: 0 1em 0 1em;
+  }
+
+
 
 [contentEditable='true']:focus {
 	outline: none;
@@ -70,21 +88,7 @@
 	width: 100%;
 }
 
-/* .createdAt-container {
-	opacity: 0;
-	transition: 0.6s;
-} */
 
-/* .note:hover .createdAt-container {
-	opacity: 1;
-} */
-/* 
-.conatiner-btn-time {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-
-} */
 
 @media (max-width: 450px) {
 	.note {
@@ -121,5 +125,9 @@
 }
 .note:hover .pin:hover {
 	background-color: rgba(95,99,104,0.1);
+	cursor: pointer;
 }
 
+.note iframe {
+	width: 100%;
+}

@@ -3,13 +3,22 @@
     margin-block-end: 5em;
     display: flex;
     flex-direction: column;
-    min-height: 10em;
     border: 1px solid #d3cece;
     border-radius: 5px;
     width: 30em;
     margin-inline: auto;
     position: relative;
+    box-shadow: 0 3px 5px rgba(0,0,0,.20);
 
+}
+
+.add-note form .txt {
+    letter-spacing: .00625em;
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    padding: .625em .9375em;
 }
 
 .add-note .input-container {
@@ -21,19 +30,23 @@
     border: none;
     background-color: inherit;
     font-size: 1.1em;
+    padding: .75em  1em;
+    letter-spacing: .01428571em;
+    font-family: Roboto,Arial,sans-serif;
+    line-height: 1.25rem;
 }
 
 .add-note input:focus {
     outline: none;
 }
 
-.add-note input[name='title'] {
+/* .add-note input[name='title'] {
     font-weight: 600;
     font-size: 1.5em;
     font-weight: 500;
     margin-block-end: 1.2em;
 
-}
+} */
 
 .add-note .tool-bar {
     display: flex;
@@ -62,21 +75,6 @@
     background-color: rgba(234, 234, 234, 0.621);
 }
 
-.add-note .btn-container {
-    margin-block-end: 0.2em;
-
-}
-
-
-.add-note .note-img .img {
-    width: 80%;
-    margin-inline: auto;
-}
-
-.add-note .note-img>* {
-    margin-block-end: 0.8em;
-}
-
 .pin-icon {
     position: absolute;
     right: 10px;
@@ -89,3 +87,29 @@
         justify-content: center;
 	}
 }
+
+/* Add Note Toolbar */
+.add-note-toolbar {
+    opacity: 0;
+    color: #202124;
+    margin-block-start: .25em; 
+    padding: .25em .25em 0 .25em;
+    transition: opacity .2s  ease-in;
+    pointer-events: none; 
+}
+
+.add-toolbar > * {
+    padding: .25em;
+    transition: background-color .2s ease-in;
+    border-radius: 50%;
+}
+
+.add-note:hover .add-toolbar {
+    opacity: 1; 
+    pointer-events: auto; 
+}
+.add-note:hover .add-toolbar>*:hover {
+	background-color: rgba(95,99,104,0.1);
+    cursor: pointer;
+}
+
