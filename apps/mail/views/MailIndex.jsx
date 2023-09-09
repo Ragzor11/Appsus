@@ -63,6 +63,7 @@ return (
             </React.Fragment>
         }
         {selectedMailId && <MailDetails onBack={() => onSelectMailId(null)} mailId={selectedMailId} />}
+        {/* <Outlet context={loadMails} />  */}
     </section>
 )
 }

@@ -18,6 +18,8 @@ export const mailService = {
     remove,
     save,
     getDefaultFilter,
+    getMailFromSearchParams,
+    getLoggedUser,
 }
 function query(filterBy = {}) {
     console.log('query filter by', filterBy)
@@ -78,4 +80,20 @@ function _createMails() {
         storageService.saveToStorage(MAIL_KEY, mails)
 
     }
+}
+function getMailFromSearchParams(searchParams = { get: () => {} }) {
+	return {
+		id: '',
+		subject: searchParams.get('subject') || '',
+		body: searchParams.get('body') || '',
+		sentAt: '',
+		from: '',
+		to: '',
+		isRead: '',
+		isStarred: '',
+		removedAt: '',
+	}
+}
+function getLoggedUser() {
+	return loggedInUser
 }
