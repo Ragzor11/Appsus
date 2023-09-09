@@ -59,7 +59,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	user-select: none;
-	width: 10em;
+	width: 7em;
 }
 
 .mail-date {
@@ -78,10 +78,6 @@
 
 .mail-preview:hover .mail-date {
 	display: none;
-}
-
-.mail-preview ~ .full-mail p {
-	white-space: pre-wrap;
 }
 
 .full-mail {
