@@ -1,36 +1,31 @@
-.mail-container {
-    border-collapse: collapse;
-    width: 100%;
-    grid-column: 2/3;
-    background-color: #fff;
-    margin: 5px;
-    height: 100%;
-    border-spacing: 0;
-    padding: 0;
-
+.mail-list {
+	min-width: 0;
+	flex: 1;
+	height: calc(100% - 2em);
+	overflow: auto;
 }
 
-.mail-list tr:hover {
-    box-shadow: var(--mail-box-shadow-1);
-
-}
-.mail-list tr{
-    border: 0.001px solid grey;
-    padding-bottom: 5px;
-    padding-top: 5px;
-
-
+.no-mails-info {
+	text-align: center;
+	flex: 1;
 }
 
-
-.mail-list td{
-line-height: 20px;
-font-size: .875rem;
-padding-top: 10px;
-padding-bottom: 10px;
-justify-self: start;
+.mail-list-container {
+	overflow: hidden;
+	margin-block-end: 0em;
+	min-width: 0;
+	flex: 1;
+	background-color: white;
+	border-radius: 15px;
 }
-.mail-list td:last-child{
-    justify-self: end;
-    padding-inline-end: 50px;
+
+@media screen and (min-width: 768px) {
+	.mail-list-container {
+		margin-block-end: 2em;
+	}
+	.mail-list {
+		/* bottom margin is removed */
+
+		height: calc(100% - 2em - 2em);
+	}
 }

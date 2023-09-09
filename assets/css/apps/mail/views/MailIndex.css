@@ -1,15 +1,28 @@
-body, .app, #root {
-    height: 100%;
-    background-color: var(--mail-bg-clr-2);
-    height: 100vh;
-
+.mail-index {
+	display: flex;
+	flex-direction: column-reverse;
+	flex: 1;
+	background-color: var(--mail-bg-clr-2);
+	padding-inline-end: 2em;
+	overflow: hidden;
 }
 
-.mail-index{
-    display: grid;
-    text-align: center;
-    grid-template-columns:1.5fr 10fr;
-    grid-template-rows: 1fr 9.8375fr;
-    height: 100%;
+.close-modal-screen {
+	cursor: pointer;
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1;
+}
 
+@media screen and (min-width: 768px) {
+	.mail-index {
+		flex-direction: row;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.mail-index {
+		padding-inline-end: 0;
+	}
 }

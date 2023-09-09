@@ -17,7 +17,6 @@ export function MailDetails() {
                 navigate('/mail')
             })
     }, [mailId])
-console.log({mail})
 if(!mail) return <div>Loading Mail...</div>
     return (
 <section className="mail-details">

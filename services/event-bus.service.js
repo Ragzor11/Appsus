@@ -19,13 +19,16 @@ function createEventEmitter() {
 export const eventBusService = createEventEmitter()
 
 export function showUserMsg(msg) {
+    console.log(msg)
     eventBusService.emit('show-user-msg', msg)
 }
 
 export function showSuccessMsg(txt) {
+    console.log(txt)
     showUserMsg({ txt, type: 'success' })
 }
 export function showErrorMsg(txt) {
+    console.log(txt)
     showUserMsg({ txt, type: 'error' })
 }
 

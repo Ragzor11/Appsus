@@ -1,58 +1,59 @@
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { mailService } from '../services/mail.service.js'
-import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
 
-const { useState ,  Fragment} = React
+const { useState, Fragment } = React
 const { useNavigate, useOutletContext, useSearchParams } = ReactRouterDOM
 
 export function MailCompose() {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [newMail, setNewMail] = useState(mailService.getMailFromSearchParams(searchParams))
-    const [isMinimized, setIsMinimized] = useState(false)
+	const [searchParams, setSearchParams] = useSearchParams()
+	const [newMail, setNewMail] = useState(mailService.getMailFromSearchParams(searchParams))
+	const [isMinimized, setIsMinimized] = useState(false)
 	const [isFullScreen, setIsFullScreen] = useState(false)
-    const navigate = useNavigate()
-    const loadMails = useOutletContext()
+	const navigate = useNavigate()
+	const loadMails = useOutletContext()
+	function onAddMail(ev) {
+		ev.preventDefault()
+		if (!utilService.validateMail(newMail.to)) {
+			showErrorMsg('Invalid Email Address!')
+			return
+		}
+		mailService
+			.save({ ...newMail, sentAt: Date.now(), from: mailService.getLoggedUser().email })
+			.then(() => {
+				showSuccessMsg('Email Sent!')
+				navigate('/mail')
+				loadMails()
+			})
+			.catch(() => showErrorMsg('Sending mail failed'))
+	}
 
-    function onAddMail(ev) {
-        ev.preventDefault()
-        if (!utilService.validateMail(newMail.to)) {
-            showErrorMsg('Invalid Email Address!')
-            return
-        }
-        mailService
-            .save({ ...newMail, sentAt: Date.now(), from: mailService.getLoggedUser().email })
-            .then(() => {
-                showSuccessMsg('Email Sent!')
-                navigate('/mail')
-                loadMails()
-            })
-            .catch(() => showErrorMsg('Sending mail failed'))
-    }
-
-    function handleChange({ target: { value, name } }) {
-        setNewMail(prev => ({ ...prev, [name]: value }))
-        setSearchParams({ subject: newMail.subject, body: newMail.body })
-    }
 	function onMinimize(isMinimizeState, ev) {
 		if (ev) ev.stopPropagation()
 		setIsMinimized(isMinimizeState)
 		setIsFullScreen(false)
 	}
-    function onFullScreen(newIsFullScreen, ev) {
+
+	function handleChange({ target: { value, name } }) {
+		setNewMail(prev => ({ ...prev, [name]: value }))
+		setSearchParams({ subject: newMail.subject, body: newMail.body })
+	}
+
+	function onFullScreen(newIsFullScreen, ev) {
 		if (ev) ev.stopPropagation()
 		setIsFullScreen(newIsFullScreen)
 		setIsMinimized(false)
 	}
-    function handleBackgroundDiv() {
-		if (isFullScreen) setIsFullScreen(false) // if pressed when screen is large, go out of fullscreen.
-		else navigate('/mail') // if pressed when screen is small, close.
+
+	function handleBackgroundDiv() {
+		if (isFullScreen) setIsFullScreen(false) 
+		else navigate('/mail') 
 	}
 
 	const { matches: isSmallScreen } = window.matchMedia('(max-width:600px')
 	const isFullScreenClass = isFullScreen ? 'full-screen' : ''
 	const isMinimizedClass = isMinimized ? 'minimized' : ''
 	const { subject, body, to } = newMail
-
 	return (
 		<Fragment>
 			<section className={`${isMinimizedClass}${isFullScreenClass} mail-compose`}>
@@ -115,5 +116,3 @@ export function MailCompose() {
 		</Fragment>
 	)
 }
-
-

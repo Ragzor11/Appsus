@@ -1,22 +1,76 @@
-import { mailService } from '../services/mail.service.js'
-import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
-import { MailList } from '../cmps/MailList.jsx'
-import { MailFilter } from '../cmps/MailFilter.jsx'
-import { MailSideBar } from '../cmps/MailSideBar.jsx'
 const { useEffect, useState, Fragment } = React
 const { Outlet, useSearchParams, useParams } = ReactRouterDOM
+import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+import { MailList } from '../cmps/MailList.jsx'
+import { mailService } from '../services/mail.service.js'
+import { MailSidebar } from '../cmps/MailSideBar.jsx'
+import { MailDetails } from '../views/MailDetails.jsx'
 
 export function MailIndex() {
+    const [mails, setMails] = useState([])
+    const [filter, setFilter] = useState(mailService.getDefaultFilter())
+    const [sort, setSort] = useState({ read: 1 })
+    const [unreadMailCount, setUnreadMailCount] = useState(0)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const params = useParams()
 
-    const [mails, setMails] = useState(null)
-    const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
-    const [selectedMailId, setSelectedMailId] = useState(null)
+    if (params.filter) {
+        if (['inbox', 'sent', 'trash', 'draft'].includes(params.filter)) {
+            if (filter.status != params.filter) onSetFilter({ status: params.filter, isStarred: null }) // avoid infinite loop
+        } else if (params.filter === 'starred') {
+            if (!filter.isStarred) onSetFilter({ isStarred: true, status: null }) // avoid infinite loop
+        }
+    } else {
+        // if we navigate back to default inbox after navigating with params, load default inbox without filters.
+        if (filter.status || filter.isStarred) onSetFilter({ isStarred: null, status: null })
+    }
 
     useEffect(() => {
-        console.log('mount')
-        console.log('use effect filter', filterBy)
-        mailService.query(filterBy).then(mails => setMails(mails))
-    }, [filterBy])
+        loadMails()
+    }, [filter, sort])
+
+    useEffect(() => {
+        setFilter(prevFilter => ({ ...prevFilter, txt: searchParams.get('txt') }))
+    }, [searchParams])
+
+    useEffect(() => {
+        mailService
+            .query({ isRead: false })
+            .then(mails => {
+                setUnreadMailCount(mails.length)
+            })
+            .catch(console.log) // user shouldn't care if query failed here, so we just log it to console.
+    }, [mails])
+
+    useEffect(() => {
+        document.title = `Appsus Mail (${unreadMailCount})`
+    }, [unreadMailCount])
+
+    function onSetFilter(filter) {
+        setFilter(prevFilter => ({ ...prevFilter, ...filter }))
+    }
+
+    function loadMails() {
+        mailService
+            .query(filter, sort)
+            .then(setMails)
+            .catch(() => {
+                showErrorMsg('Error fetching emails')
+            })
+    }
+
+    function onSetMailReadStatus(mailId, isRead) {
+        mailService
+            .get(mailId)
+            .then(mail => {
+                if (mail.removedAt) return
+                const diff = isRead ? -1 : 1
+                setUnreadMailCount(prev => prev + diff)
+                const newMail = { ...mail, isRead }
+                mailService.save(newMail)
+            })
+            .catch(() => showErrorMsg('An error occurred '))
+    }
 
     function onRemoveMail(mailId) {
         mailService
@@ -29,44 +83,56 @@ export function MailIndex() {
                 const newMail = { ...mail, removedAt: Date.now() }
                 mailService.save(newMail).then(() => {
                     setMails(mails.filter(mail => mail.id !== mailId))
-                    console.log('moved to trash')
-                    showSuccessMsg('Email moved to trash!')
+                    showSuccessMsg('Email moved to Trash')
                 })
             })
-            .catch(() => showErrorMsg('Error moving mail to trash'))
+            .catch(() => showErrorMsg('An error occurred'))
     }
+
     function onFullDeleteMail(mailId) {
-        console.log('FullDelte',mailId)
-
+        if (confirm('are you sure you want to delete mail forever?')) {
+            mailService
+                .remove(mailId)
+                .then(() => {
+                    // these mails are only shown when we're at the "removed" page, so we can act like we're "deleting" them from that page.
+                    setMails(mails.filter(mail => mail.id !== mailId))
+                    showSuccessMsg(`Email removed!`)
+                })
+                .catch(() => showErrorMsg('An error occurred'))
+        }
     }
 
-
-function onSetFilterBy(filterBy) {
-    console.log('filterBy:', filterBy)
-    setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+    function restoreMail(mailId) {
+        mailService
+            .get(mailId)
+            .then(mail => {
+                const newMail = { ...mail, removedAt: null }
+                mailService.save(newMail).then(() => {
+                    setMails(mails.filter(mail => mail.id !== mailId))
+                    showSuccessMsg('Email restored!')
+                })
+            })
+            .catch(() => showErrorMsg('An error occurred'))
+    }
+    return (
+        <Fragment>
+            <main className="mail-index">
+                <MailSidebar unreadMailCount={unreadMailCount} active={params.filter} />
+                {!params.mailId && (
+                    <MailList
+                        filter={filter}
+                        setFilter={setFilter}
+                        sort={sort}
+                        onSetSort={setSort}
+                        mails={mails}
+                        onRemoveMail={onRemoveMail}
+                        onSetMailReadStatus={onSetMailReadStatus}
+                        restoreMail={restoreMail}
+                    />
+                )}
+                {params.mailId && <MailDetails />}
+            </main>
+            <Outlet context={loadMails} /> {/* compose mail outlet */}
+        </Fragment>
+    )
 }
-
-function onSelectMailId(mailId) {
-    setSelectedMailId(mailId)
-}
-
-
-console.log('render')
-if (!mails) return <div>Loading...</div>
-return (
-    <section className="mail-index">
-        <MailSideBar key="mail-sidebar" />
-        {!selectedMailId &&
-            <React.Fragment>
-                <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-                <MailList mails={mails} onRemoveMail={onRemoveMail} onSelectMailId={onSelectMailId} />
-            </React.Fragment>
-        }
-        {selectedMailId && <MailDetails onBack={() => onSelectMailId(null)} mailId={selectedMailId} />}
-        {/* <Outlet context={loadMails} />  */}
-    </section>
-)
-}
-
-
-

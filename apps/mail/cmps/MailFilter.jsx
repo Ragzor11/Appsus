@@ -1,55 +1,47 @@
-const { useState, useEffect } = React
+const { useEffect, Fragment } = React
+const { useNavigate, useSearchParams } = ReactRouterDOM
 
-export function MailFilter({ filterBy, onSetFilterBy }) {
-    console.log(filterBy, 'filterBy')
-    console.log(onSetFilterBy, 'onSetFilterBy')
-    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-    const [textClicked, setTextClicked] = useState(false)
+import { eventBusService } from '../../../services/event-bus.service.js'
+export function MailFilter({ active, isExpanded, unreadMailCount }) {
+	const [searchParams, setSearchParams] = useSearchParams()
+	const navigate = useNavigate()
 
+	useEffect(() => {
+		const unsubscribe = eventBusService.on('input-changed', txt => {
+			setSearchParams({ txt })
+		})
+		return unsubscribe
+	}, [])
 
-    useEffect(() => {
-        onSetFilterBy(filterByToEdit)
-    }, [filterByToEdit])
+	function setFilter(path) {
+        console.log(path)
+		if (active === path) navigate('/mail')
+		else navigate(`/mail/${path}`)
+	}
 
-    function handleChange({ target }) {
-        console.log('filtering')
-        const field = target.name
-        let value = target.value
-        console.log(value)
-        console.log(target.type)
-
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value || ''
-                break;
-
-            case 'checkbox':
-                value = target.checked
-                break
-
-            default:
-                break;
-        }
-
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
-    }
-
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilterBy(filterByToEdit)
-    }
-    function onClick() {
-        console.log('clicked');
-    }
-
-    const { txt } = filterByToEdit
-    return (
-        <form className="mail-filter">
-            <div className="search-box"onSubmit={onSubmitFilter}>
-                <i class="icon fa-solid fa-magnifying-glass"></i>
-                <input onClick={onClick} value={txt} onChange={handleChange} type="text" placeholder="Search mail" id="txt" name="txt" />
-            </div>
-        </form>
-    )
+	return (
+		<ul className="clean-list mail-filter">
+			<li className={active === 'inbox' ? 'active' : ''} onClick={() => setFilter('inbox')}>
+				<span className="material-symbols-outlined">inbox</span>
+				{isExpanded && (
+					<Fragment>
+						<span>Inbox</span>
+						{unreadMailCount > 0 && <span className="unread-mail-count">{unreadMailCount}</span>}
+					</Fragment>
+				)}
+			</li>
+			<li className={active === 'starred' ? 'active' : ''} onClick={() => setFilter('starred')}>
+				<span className="material-symbols-outlined">star</span>
+				{isExpanded && <span>Starred</span>}
+			</li>
+			<li className={active === 'sent' ? 'active' : ''} onClick={() => setFilter('sent')}>
+				<span className="material-symbols-outlined">send</span>
+				{isExpanded && <span>Sent</span>}
+			</li>
+			<li className={active === 'trash' ? 'active' : ''} onClick={() => setFilter('trash')}>
+				<span className="material-symbols-outlined">Delete</span>
+				{isExpanded && <span>Deleted</span>}
+			</li>
+		</ul>
+	)
 }
