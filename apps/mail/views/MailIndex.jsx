@@ -16,12 +16,11 @@ export function MailIndex() {
 
     if (params.filter) {
         if (['inbox', 'sent', 'trash', 'draft'].includes(params.filter)) {
-            if (filter.status != params.filter) onSetFilter({ status: params.filter, isStarred: null }) // avoid infinite loop
+            if (filter.status != params.filter) onSetFilter({ status: params.filter, isStarred: null })
         } else if (params.filter === 'starred') {
-            if (!filter.isStarred) onSetFilter({ isStarred: true, status: null }) // avoid infinite loop
+            if (!filter.isStarred) onSetFilter({ isStarred: true, status: null }) 
         }
     } else {
-        // if we navigate back to default inbox after navigating with params, load default inbox without filters.
         if (filter.status || filter.isStarred) onSetFilter({ isStarred: null, status: null })
     }
 
@@ -39,7 +38,7 @@ export function MailIndex() {
             .then(mails => {
                 setUnreadMailCount(mails.length)
             })
-            .catch(console.log) // user shouldn't care if query failed here, so we just log it to console.
+            .catch(console.log)
     }, [mails])
 
     useEffect(() => {
