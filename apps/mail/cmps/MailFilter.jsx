@@ -40,7 +40,7 @@ export function MailFilter({ active, isExpanded, unreadMailCount }) {
 			</li>
 			<li className={active === 'trash' ? 'active' : ''} onClick={() => setFilter('trash')}>
 				<span className="material-symbols-outlined">Delete</span>
-				{isExpanded && <span>Deleted</span>}
+				{isExpanded && <span>Trash</span>}
 			</li>
 		</ul>
 	)

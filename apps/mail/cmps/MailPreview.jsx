@@ -79,14 +79,6 @@ export function MailPreview({ mail, onSetMailReadStatus, onRemoveMail, restoreMa
                 </div>
                 <span className="mail-date">{getDateText(sentAt)}</span>
                 <div className="icons-container">
-                    {!removedAt && (
-                        <span
-                            onClick={ev => onSendToNotes(ev)}
-                            title="Save as note"
-                            className="save-as-note material-symbols-outlined">
-                            near_me
-                        </span>
-                    )}
                     {removedAt && (
                         <span title="Restore" onClick={onRestoreMail} className="material-symbols-outlined">
                             restore_from_trash
