@@ -37,11 +37,6 @@ export function MailSort({ onSortBy, sort }) {
                 {sort.date === 1 && <span className="material-symbols-outlined">arrow_downward</span>}
                 {sort.date === -1 && <span className="material-symbols-outlined">arrow_upward</span>}
             </button>
-            <button onClick={() => onSort('subject')} className="sort-by-subject">
-                subject
-                {sort.subject === 1 && <span className="material-symbols-outlined">arrow_downward</span>}
-                {sort.subject === -1 && <span className="material-symbols-outlined">arrow_upward</span>}
-            </button>
             <div className="input-container">
                 <span onClick={onSetFocus} title="search" className="material-symbols-outlined">
                     search
