@@ -1,6 +1,4 @@
 header {
-    margin-inline-start: 1.5em;
-    margin-inline-end: 1.5em;
     background: lightcyan;
     opacity: 0.75;
     border-bottom: 2px solid white;
@@ -10,6 +8,7 @@ header {
     display: flex;
     justify-content: space-between;
     padding: 20px 0;
+    align-items: center;
 }
 
 nav a {
