@@ -8,7 +8,7 @@ export function Home() {
 	return (
 		<main className="home">
 			<section className="img-container">
-				{/* <h1>Design and software solution you can rely on!</h1> */}
+				<h1>Design and software solution you can rely on!</h1>
 				<img src="./assets/img/computer.jpg"></img>
 			</section>
 
