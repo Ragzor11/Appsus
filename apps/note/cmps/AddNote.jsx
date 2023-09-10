@@ -134,7 +134,7 @@ export function AddNote({ onAddNote }) {
 					newNote={newNote}
 					setNewNote={setNewNote}
 				/>
-                {addOpen && <button className="add-btn">Add</button>}
+                {addOpen && <button className="add-btn material-symbols-outlined">note_add</button>}
             </form>
 
             {addOpen && <div className="add-toolbar" >

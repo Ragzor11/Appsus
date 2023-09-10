@@ -1,1 +1,22 @@
  /* home */
+
+ .home {
+	display: flex;
+	flex-direction: column;
+}
+
+.home .img-container {
+	position: relative;
+}
+
+.home .img-container img {
+	width: 100%;
+	object-fit: fill;
+	object-position: top left;
+}
+
+.image-container h1{
+    color:aliceblue;
+    border: 10px stripe aliceblue;
+    font-family: ultra-regular;
+}

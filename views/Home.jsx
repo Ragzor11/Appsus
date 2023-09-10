@@ -1,6 +1,17 @@
-
+const { Link } = ReactRouterDOM
+const { useEffect } = React
 export function Home() {
-    return <section className="home">
-        <h1>Welcome to home page!</h1>
-    </section>
+	useEffect(() => {
+		document.title = 'appSus'
+	}, [])
+
+	return (
+		<main className="home">
+			<section className="img-container">
+				<h1>Design and software solution you can rely on!</h1>
+				<img src="./assets/img/computer.jpg"></img>
+			</section>
+
+        </main>
+    )
 }

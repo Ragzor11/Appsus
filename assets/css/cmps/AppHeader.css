@@ -1,6 +1,8 @@
 header {
-
+    margin-inline-start: 1.5em;
+    margin-inline-end: 1.5em;
     background: lightcyan;
+    opacity: 0.75;
     border-bottom: 2px solid white;
 }
 
@@ -23,3 +25,20 @@ nav a.active {
     font-weight: bold;
     text-decoration: overline;
 }
+
+.logo-link{
+    display: flex;
+    position:relative;
+}
+
+.logo-text {
+    font-family: sarpanch;
+    position:absolute;
+    top: 85px;
+}
+
+.appsus-logo {
+    width: 70px;
+}
+
+

@@ -46,8 +46,7 @@
 .note .title.empty::before {
 	content: 'Title';
 	position: absolute;
-	top:37px;
-	/* left: 25px; */
+	top:42px;
 	font-weight: bold;
 	font-size: 1.25em;
 	transform: translateY(-50%);
@@ -64,7 +63,21 @@
   .note .txt {
 	padding: 0 1em 0 1em;
   }
-
+  
+  .note .txt.empty::before {
+	content: 'Take a note...';
+	position: absolute;
+	top:86px;
+	font-size: 1em;
+	transform: translateY(-50%);
+	color: #aaa;
+	pointer-events: none; 
+	opacity: 0.75;
+	transition: opacity 0.3s ease;
+  }
+  .note .txt.empty:focus::before {
+	opacity: 0; 
+  }
 
 
 [contentEditable='true']:focus {

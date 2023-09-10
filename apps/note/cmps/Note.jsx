@@ -12,8 +12,6 @@ export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTog
     const elTitle = useRef(title)
     const elTxt = useRef(txt)
 
-    
-
     useEffect(() => {
         note2WayBinding(noteEdit)
     }, [noteEdit])
@@ -38,23 +36,6 @@ export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTog
 
     }, [isCentered])
 
-    // function onNoteChange() {
-    //     const newTxt = elTxt.current.innerText || ''
-    //     const newTitle = elTitle.current.innerText || ''
-
-    //     if (!newTxt) elTxt.className = 'empty-txt'
-    //     else elTxt.className = ''
-    //     if (!newTitle) elTitle.className = 'empty-title'
-    //     else elTitle.className = ''
-
-    //     setNoteEdit((prevEdit) => ({
-    //         ...prevEdit,
-    //         info: {
-    //             txt: newTxt,
-    //             title: newTitle,
-    //         },
-    //     }))
-    // }
     function onColorEdit(color) {
         setNoteColor(color)
         onChangeColor(color, id)
@@ -67,11 +48,11 @@ export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTog
     const isPinned = pinState ? 'pinned' : ''
     const centered = isCentered ? 'center' : ''
 
-    function isTitleEmpty() {
-        if(!elTitle.current) return false
-        const isEmptyTitle = elTitle.current.textContent
-        console.log('isEmptyTitle: ',isEmptyTitle);
-        return isEmptyTitle
+    function isElRefEmpty(elRef) {
+        if(!elRef.current) return false
+        const isEmptyElRef = elRef.current.textContent
+        console.log('isEmptyTitle: ',isEmptyElRef);
+        return isEmptyElRef
       }
 
     return (
@@ -82,8 +63,8 @@ export function Note({ note, onRemoveNote, onChangeColor, onDuplicateNote, onTog
             style={bgStyle}
         >
             <span className={`pin material-symbols-outlined ${isPinned}`} title="Pin Note" onClick={onTogglePinChange}>push_pin</span>
-            <h1 ref={elTitle} className={`title ${isTitleEmpty() ? '' : 'empty'}`} contentEditable={true} suppressContentEditableWarning={true}>{title}</h1>
-            {type === 'NoteTxt' && <p ref={elTxt} className="txt" contentEditable={true} suppressContentEditableWarning={true} >{txt} </p>}
+            <h1 ref={elTitle} className={`title ${isElRefEmpty(elTitle) ? '' : 'empty'}`} contentEditable={true} suppressContentEditableWarning={true}>{title}</h1>
+            {type === 'NoteTxt' && <p ref={elTxt} className={`txt ${isElRefEmpty(elTxt) ? '' : 'empty'}`} contentEditable={true} suppressContentEditableWarning={true} >{txt}</p>}
             {type === 'NoteImg' && <img src={imgUrl}></img>}
 			{type === 'NoteVid' && <iframe src={vidUrl}></iframe>}
 

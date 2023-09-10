@@ -1,6 +1,6 @@
 .add-note {
     margin-block-start: 3em;
-    margin-block-end: 5em;
+    margin-block-end: 1em;
     display: flex;
     flex-direction: column;
     border: 1px solid #d3cece;
@@ -8,13 +8,13 @@
     width: 30em;
     margin-inline: auto;
     position: relative;
-    box-shadow: 0 3px 5px rgba(0,0,0,.20);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .20);
 
 }
 
 .add-note form .txt {
     letter-spacing: .00625em;
-    font-family: "Google Sans",Roboto,Arial,sans-serif;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.5rem;
@@ -30,9 +30,9 @@
     border: none;
     background-color: inherit;
     font-size: 1.1em;
-    padding: .75em  1em;
+    padding: .75em 1em;
     letter-spacing: .01428571em;
-    font-family: Roboto,Arial,sans-serif;
+    font-family: Roboto, Arial, sans-serif;
     line-height: 1.25rem;
 }
 
@@ -64,7 +64,7 @@
 .add-note .add-btn {
     width: 3em;
     cursor: pointer;
-    place-self: end;
+    /* place-self: end; */
     margin-inline-end: 0.2em;
     background-color: inherit;
     border: none;
@@ -75,6 +75,14 @@
     background-color: rgba(234, 234, 234, 0.621);
 }
 
+.add-btn.material-symbols-outlined {
+    position:absolute;
+    bottom: 10px;
+    right: -10px;
+    font-size: 32px;
+    opacity: .8;
+}
+
 .pin-icon {
     position: absolute;
     right: 10px;
@@ -82,34 +90,34 @@
 }
 
 @media (max-width: 450px) {
-	.add-note {
+    .add-note {
         width: 20em;
         justify-content: center;
-	}
+    }
 }
 
 /* Add Note Toolbar */
 .add-note-toolbar {
     opacity: 0;
     color: #202124;
-    margin-block-start: .25em; 
+    margin-block-start: .25em;
     padding: .25em .25em 0 .25em;
-    transition: opacity .2s  ease-in;
-    pointer-events: none; 
+    transition: opacity .2s ease-in;
+    pointer-events: none;
 }
 
-.add-toolbar > * {
+.add-toolbar>* {
     padding: .25em;
     transition: background-color .2s ease-in;
     border-radius: 50%;
 }
 
 .add-note:hover .add-toolbar {
-    opacity: 1; 
-    pointer-events: auto; 
-}
-.add-note:hover .add-toolbar>*:hover {
-	background-color: rgba(95,99,104,0.1);
-    cursor: pointer;
+    opacity: 1;
+    pointer-events: auto;
 }
 
+.add-note:hover .add-toolbar>*:hover {
+    background-color: rgba(95, 99, 104, 0.1);
+    cursor: pointer;
+}
