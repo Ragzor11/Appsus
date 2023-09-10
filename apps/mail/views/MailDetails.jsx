@@ -1,33 +1,44 @@
-import { mailService } from "../services/mail.service.js"
 const { useState, useEffect } = React
-const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useParams, useNavigate } = ReactRouterDOM
 
+import { showErrorMsg} from '../../../services/event-bus.service.js'
+import { utilService } from '../../../services/util.service.js'
+import { mailService } from '../services/mail.service.js'
 
 export function MailDetails() {
-    const [mail, setMail] = useState(null)
-    const { mailId } = useParams()
-    const navigate = useNavigate()
+	const [mail, setMail] = useState()
+	const { mailId } = useParams()
+	const navigate = useNavigate()
 
-    useEffect(() => {
-        mailService
-            .get(mailId)
-            .then(setMail)
-            .catch(err => {
-                console.log('error getting mail', err)
-                navigate('/mail')
-            })
-    }, [mailId])
-if(!mail) return <div>Loading Mail...</div>
-    return (
-<section className="mail-details">
-    <h2>{mail.subject}</h2>
-    <h3><img src ='../../../assets/img/senderLogo.png'/> {mail.senderName}({mail.senderMail})</h3>
-    <h4>{mail.sentAt}</h4>
-    <h3>{mail.to}</h3>
-    <p>{mail.body}</p>
+	useEffect(() => {
+		loadMail()
+	}, [mailId])
 
+	function loadMail() {
+		mailService
+			.get(mailId)
+			.then(setMail)
+			.catch(() => {
+				showErrorMsg('mail not found')
+				navigate('/mail')
+			})
+	}
 
-
-</section>
-    )
+	if (!mail) return <span className="loader"></span>
+	const timeReceived = utilService.formatMailDate(mail.sentAt)
+	return (
+		<section className="mail-details">
+			<div className="top-container">
+				<div>
+					<h1>{mail.subject}</h1>
+					<h6>from {mail.from}</h6>
+				</div>
+				<h5>{timeReceived}</h5>
+			</div>
+			<div className="mail-body">
+				<img className="mail-user-img" src="../../../assets/img/senderlogo.png" alt="" />
+				<p>{mail.body}</p>
+			</div>
+		</section>
+	)
 }
