@@ -8,9 +8,9 @@ export function AppHeader() {
             <h1 className="logo-txt">appSuS</h1>
         </Link>
         <nav>
-            <NavLink to="/"><span class="material-symbols-outlined">home</span></NavLink>
-            <NavLink to="/mail"><span class="material-symbols-outlined">mail</span></NavLink>
-            <NavLink to="/note" ><span class="material-symbols-outlined">note</span></NavLink>
+            <NavLink to="/"><span className="material-symbols-outlined">home</span></NavLink>
+            <NavLink to="/mail"><span className="material-symbols-outlined">mail</span></NavLink>
+            <NavLink to="/note" ><span className="material-symbols-outlined">note</span></NavLink>
         </nav>
     </header>
 }

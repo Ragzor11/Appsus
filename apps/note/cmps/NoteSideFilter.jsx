@@ -1,7 +1,3 @@
-
- 
- export function NoteSideFilter() {
-    return (
-       {} // <h1>i'm a side bar</h1>
-    )
- }
+export function NoteSideFilter() {
+  return {} // <h1>i'm a side bar</h1>
+}
